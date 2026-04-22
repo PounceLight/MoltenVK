@@ -1065,7 +1065,7 @@ static MTLDispatchType getDispatchType(MVKCommandUse use) {
 		case kMVKCommandUseAccumOcclusionQuery:
 			return MTLDispatchTypeConcurrent;
 		default:
-			return MTLDispatchTypeSerial;
+			return MTLDispatchTypeConcurrent;
 	}
 }
 
