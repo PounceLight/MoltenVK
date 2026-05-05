@@ -186,7 +186,7 @@ void MVKCmdPipelineBarrier<N>::encode(MVKCommandEncoder* cmdEncoder) {
 	}
 #endif
 
-	if (!cmdEncoder->_mtlRenderEncoder && cmdEncoder->isUsingMetalArgumentBuffers() && cmdEncoder->getDevice()->hasResidencySet()) {
+	if (!cmdEncoder->_mtlRenderEncoder && cmdEncoder->isUsingMetalArgumentBuffers()) {
 		cmdEncoder->endCurrentMetalEncoding();
 
 		for (auto& b : _barriers) {
@@ -624,4 +624,3 @@ void MVKCmdWaitEvents<N>::encode(MVKCommandEncoder* cmdEncoder) {
 
 template class MVKCmdWaitEvents<1>;
 template class MVKCmdWaitEvents<8>;
-
