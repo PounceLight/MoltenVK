@@ -25,9 +25,15 @@
 #include "MVKFoundation.h"
 #include "MVKCmdDraw.h"
 #include "MVKCmdRendering.h"
+#include "MVKOSExtensions.h"
 #include <sys/mman.h>
 
 using namespace std;
+
+static bool mvkUseConcurrentComputeEncoders() {
+	static const bool useConcurrentComputeEncoders = mvkGetEnvVarNumber("MVK_CONFIG_USE_CONCURRENT_COMPUTE_ENCODERS", 1.0);
+	return useConcurrentComputeEncoders;
+}
 
 
 #pragma mark -
@@ -1063,7 +1069,7 @@ static MTLDispatchType getDispatchType(MVKCommandUse use) {
 		case kMVKCommandUseAccumOcclusionQuery:
 			return MTLDispatchTypeConcurrent;
 		default:
-			return MTLDispatchTypeConcurrent;
+			return mvkUseConcurrentComputeEncoders() ? MTLDispatchTypeConcurrent : MTLDispatchTypeSerial;
 	}
 }
 
