@@ -62,6 +62,7 @@ const char* mvkVkCommandName(MVKCommandUse cmdUse) {
 	}
 }
 
+
 const char* mvkVkResultName(VkResult vkResult) {
 	switch (vkResult) {
 
@@ -136,6 +137,11 @@ const char* mvkVkComponentSwizzleName(VkComponentSwizzle swizzle) {
 }
 
 bool mvkSupportsBufferDeviceAddress() { return mvkOSVersionIsAtLeast(13.0, 16.0, 1.0); }
+
+bool mvkUseConcurrentComputeEncoders() {
+	static const bool useConcurrentComputeEncoders = mvkGetEnvVarNumber("MVK_CONFIG_USE_CONCURRENT_COMPUTE_ENCODERS", 1.0);
+	return useConcurrentComputeEncoders;
+}
 
 
 #pragma mark -
