@@ -280,6 +280,7 @@ void MVKQueue::handleMTLCommandBufferError(id<MTLCommandBuffer> mtlCmdBuff) {
 	}
 }
 
+
 #pragma mark Construction
 
 MVKQueue::MVKQueue(MVKDevice* device, MVKQueueFamily* queueFamily, uint32_t index, float priority, VkQueueGlobalPriority globalPriority) : MVKDeviceTrackingMixin(device) {
@@ -533,7 +534,7 @@ VkResult MVKQueueCommandBufferSubmission::commitActiveMTLCommandBuffer(bool sign
 
 	// If this is the last command buffer in the submission, we're losing the context and need synchronize
 	// current barrier fences to the ones at index 0, which will be what the next submision starts with.
-	if (isUsingMetalArgumentBuffers() && signalCompletion) {
+	if ((isUsingMetalArgumentBuffers() || mvkUseConcurrentComputeEncoders()) && signalCompletion) {
 		_encodingContext.syncFences(getDevice(), _activeMTLCommandBuffer);
 	}
 
